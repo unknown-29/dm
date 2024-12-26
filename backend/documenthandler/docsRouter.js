@@ -81,8 +81,6 @@ router.route('/get-doc-content').get(async (req, res) => {
 router.route('/get-doc-names-shared-with-user').get(async (req, res) => {
 	try {
 		const requser = req.body;
-		console.log(requser);
-
 		const docnames = await Doc.find(
 			{
 				'sharedWith.username': requser.username,
