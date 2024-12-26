@@ -81,13 +81,10 @@ router.route('/get-doc-content').get(async (req, res) => {
 router.route('/get-doc-names-shared-with-user').get(async (req, res) => {
 	try {
 		const requser = req.body;
-		const docnames = await Doc.find(
-			{
-				'sharedWith.username': requser.username,
-			},
-			{ content: 1 }
-		);
-		res.status(200).json({ docnames });
+		const docs = await Doc.find({
+			'sharedWith.username': requser.username,
+		});
+		res.status(200).json({ docs });
 		return;
 	} catch (error) {
 		res.status(500).send('internal server error');
