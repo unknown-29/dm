@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_REGISTRY = 'your-docker-registry-url' // e.g., 'docker.io/username'
+     
         IMAGE_NAME = 'syncscript'
     }
 
@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(
-                        credentialsId: '${DOCKER_REGISTRY_CREDS}', // Replace with Jenkins credential ID
+                        credentialsId: '$DOCKER_REGISTRY_CREDS', // Replace with Jenkins credential ID
                         usernameVariable: 'DOCKER_USER',
                         passwordVariable: 'DOCKER_PASSWORD'
                     )]) {
@@ -40,9 +40,7 @@ pipeline {
     }
 
     post {
-        always {
-            bat 'docker-compose -f docker-compose.yml down'
-        }
+        
         success {
             echo 'Build and push succeeded!'
         }
