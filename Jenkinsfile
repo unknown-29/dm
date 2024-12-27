@@ -16,7 +16,9 @@ pipeline {
         stage('Building our image') { 
             steps { 
                 script { 
+                    bat 'cd ./frontend'
                     dockerImageFrontend = docker.build frontend_registry
+                    bat 'cd ../backend'
                     dockerImageBackend = docker.build backend_registry                     
                 }
             } 
