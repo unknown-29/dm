@@ -24,14 +24,18 @@ pipeline {
             } 
         }
 
-        stage('Deploy our image') { 
-            steps {              
-                 script { 
-                    docker.withRegistry( '', registryCredential ) { 
-                        dockerImageBackend.push() 
-                    }
-                     docker.withRegistry( '', registryCredential ) { 
-                        dockerImageFrontend.push() 
+        stage('Push to Registry') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(
+                        credentialsId: '3e0582a4-db54-4f4e-8a37-4284463b9f0e', // Replace with Jenkins credential ID
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASSWORD'
+                    )]) {
+                        bat """
+                        echo "$DOCKER_PASSWORD" | docker login docker.io/vikrampatel -u "$DOCKER_USER" --password-stdin
+                        docker-compose -f docker-compose.yml push
+                        """
                     }
                 } 
             }
