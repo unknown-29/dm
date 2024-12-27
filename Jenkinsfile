@@ -30,7 +30,7 @@ pipeline {
                         passwordVariable: 'DOCKER_PASSWORD'
                     )]) {
                         bat """
-                        echo "$DOCKER_PASSWORD" | docker login  -u "$DOCKER_USER" --password-stdin
+                        echo "$DOCKER_PASSWORD" | docker login docker.io/vikrampatel -u "$DOCKER_USER" --password-stdin
                         docker-compose -f docker-compose.yml push
                         """
                     }
