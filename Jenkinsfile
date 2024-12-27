@@ -16,7 +16,7 @@ pipeline {
         stage('Build and Test') {
             steps {
                 script {
-                    sh 'docker-compose -f docker-compose.yml up --build -d'
+                    bat 'docker-compose -f docker-compose.yml up --build -d'
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
                         usernameVariable: 'DOCKER_USER',
                         passwordVariable: 'DOCKER_PASSWORD'
                     )]) {
-                        sh """
+                        bat """
                         echo "$DOCKER_PASSWORD" | docker login  -u "$DOCKER_USER" --password-stdin
                         docker-compose -f docker-compose.yml push
                         """
@@ -41,7 +41,7 @@ pipeline {
 
     post {
         always {
-            sh 'docker-compose -f docker-compose.yml down'
+            bat 'docker-compose -f docker-compose.yml down'
         }
         success {
             echo 'Build and push succeeded!'
