@@ -4,9 +4,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t vikrampatel/syncscript_backend ./backend/'
+        sh 'docker build -t vikrampatel/syncscript_backend ./backend/Dockerfile'
         sh 'docker tag vikrampatel/syncscript_backend $DOCKER_SYNCSCRIPT_B_IMAGE'
-        sh 'docker build -t vikrampatel/syncscript_frontend ./frontend/'
+        sh 'docker build -t vikrampatel/syncscript_frontend ./frontend/Dockerfile'
         sh 'docker tag vikrampatel/syncscript_frontend $DOCKER_SYNCSCRIPT_F_IMAGE'
       }
     }
