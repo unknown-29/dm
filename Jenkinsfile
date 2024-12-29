@@ -1,46 +1,51 @@
 pipeline {
-    environment {
-        frontend_registry = "vikrampatel/syncscript_frontend"      
-        backend_registry = "vikrampatel/syncscript_backend"      
-        registryCredential = '3e0582a4-db54-4f4e-8a37-4284463b9f0e'
-        dockerImageFrontend = ''
-        dockerImageBackend = ''
-    }
     agent any
+
+    environment {
+     
+        IMAGE_NAME = 'syncscript'
+    }
+
     stages {
-        stage('Cloning our Git') { 
-            steps { 
+        stage('Checkout') {
+            steps {
                 checkout scm
             }
-        } 
-        stage('Building our image') { 
-            steps { 
-                script { 
-                    bat 'cd ./frontend'
-                    dockerImageFrontend = docker.build frontend_registry
-                    bat 'cd ../backend'
-                    dockerImageBackend = docker.build backend_registry                     
+        }
+
+        stage('Build and Test') {
+            steps {
+                script {
+                    sh 'docker-compose -f docker-compose.yml up --build -d'
                 }
-            } 
+            }
         }
 
         stage('Push to Registry') {
             steps {
                 script {
                     withCredentials([usernamePassword(
-                        credentialsId: '3e0582a4-db54-4f4e-8a37-4284463b9f0e', // Replace with Jenkins credential ID
+                        credentialsId: 'bae1f429-d0f8-49b7-a2cf-21f6eb2c6b37', // Replace with Jenkins credential ID
                         usernameVariable: 'DOCKER_USER',
                         passwordVariable: 'DOCKER_PASSWORD'
                     )]) {
-                        bat """
-                        echo "$DOCKER_PASSWORD" | docker login docker.io/vikrampatel -u "$DOCKER_USER" --password-stdin
+                        sh """
+                        echo "$DOCKER_PASSWORD" | docker login docker.io/vikrampatel -u "$DOCKER_USER" --password-stdin\
                         docker-compose -f docker-compose.yml push
                         """
                     }
-                } 
+                }
             }
-        }       
+        }
+    }
+
+    post {
         
+        success {
+            echo 'Build and push succeeded!'
+        }
+        failure {
+            echo 'Build or push failed!'
+        }
     }
 }
-
