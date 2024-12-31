@@ -5,6 +5,8 @@
   "dependencies": {
     "bootstrap": "^5.3.3",
     "cra-template": "1.2.0",
+    "editor-to-word": "^0.2.7",
+    "html2pdf.js": "^0.10.2",
     "mdb-react-ui-kit": "^9.0.0",
     "quill": "^2.0.3",
     "react": "^19.0.0",
