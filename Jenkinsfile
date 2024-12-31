@@ -16,7 +16,10 @@ pipeline {
         stage('Build and Test') {
             steps {
                 script {
-                    sh 'docker-compose -f docker-compose.yml up --build -d'
+                    sh '''
+                    
+                    docker-compose -f docker-compose.yml up --build -d
+                    '''
                 }
             }
         }
@@ -25,13 +28,15 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(
-                        credentialsId: 'bae1f429-d0f8-49b7-a2cf-21f6eb2c6b37', // Replace with Jenkins credential ID
+                        credentialsId: '67fb6fd6-0bfa-4e2d-ac2a-776bec6fe332', // Replace with Jenkins credential ID
                         usernameVariable: 'DOCKER_USER',
                         passwordVariable: 'DOCKER_PASSWORD'
                     )]) {
                         sh """
-                        echo "$DOCKER_PASSWORD" | docker login docker.io/vikrampatel -u "$DOCKER_USER" --password-stdin\
-                        docker-compose -f docker-compose.yml push
+                        
+                        echo "$DOCKER_PASSWORD" | docker login  -u "$DOCKER_USER" --password-stdin
+                        docker push vikrampatel/syncscript_backend
+                        docker push vikrampatel/syncscript_frontend
                         """
                     }
                 }
