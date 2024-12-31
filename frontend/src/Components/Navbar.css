@@ -1,4 +1,4 @@
-/* Base Navbar Styles */
+
 .navbar {
   display: flex;
   align-items: center;
@@ -37,7 +37,7 @@
 }
 
 .navbar-buttons {
-  display: none; /* Hide on small screens */
+  display: none;
 }
 
 .navbar-btn1,
@@ -64,11 +64,11 @@
   cursor: pointer;
 }
 
-/* Sidebar Styles */
+
 .sidebar {
   position: fixed;
   top: 0;
-  right: -300px; /* Hidden initially */
+  right: -300px;
   width: 300px;
   height: 100%;
   background-color: #f9f9f9;
@@ -82,7 +82,7 @@
 }
 
 .sidebar.active {
-  right: 0; /* Slide in */
+  right: 0;
 }
 
 .close-btn {
@@ -93,9 +93,9 @@
   cursor: pointer;
 }
 
-/* Responsive Design */
 
-/* Small screens (phones) */
+
+
 @media (max-width: 768px) {
   .navbar-input {
     width: 100%;
@@ -107,18 +107,18 @@
   }
 
   .navbar-buttons {
-    display: none; /* Hide buttons in navbar */
+    display: none; 
   }
 }
 
-/* Large screens (laptops and desktops) */
+
 @media (min-width: 768px) {
   .sidebar {
-    display: none; /* Hide sidebar */
+    display: none;
   }
 
   .navbar-buttons {
-    display: flex; /* Show buttons in navbar */
+    display: flex; 
     align-items: center;
   }
 }
