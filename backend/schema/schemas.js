@@ -9,6 +9,7 @@ const userSchema = new Schema({
 const docSchema = new Schema({
 	owner: String,
 	docname: String,
+	content: String,
 	sharedWith: [
 		{
 			username: String,
@@ -16,7 +17,6 @@ const docSchema = new Schema({
 		},
 	],
 	url: String,
-	content: String,
 });
 
 const User = mongoose.model('User', userSchema);
