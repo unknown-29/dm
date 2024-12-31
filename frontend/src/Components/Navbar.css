@@ -46,8 +46,7 @@
   border: 1px solid transparent;
   border-radius: 7px;
   background-color: #3b3b3b;
-  font-weight: bold;
-  color: black;
+  color: #ccc;
   cursor: pointer;
   margin-left: 1rem;
 }
