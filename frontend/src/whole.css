@@ -41,10 +41,10 @@ body {
   padding: 1rem;
   margin: 1rem auto;
   box-shadow: 
-  2px 2px 2px #2a63c5,   /* Bottom-right shadow */
-  -2px 2px 2px #2a63c5,  /* Bottom-left shadow */
-  2px -2px 2px #2a63c5,  /* Top-right shadow */
-  -2px -2px 2px #2a63c5; /* Top-left shadow */
+  2px 2px 2px #2a63c5,   
+  -2px 2px 2px #2a63c5, 
+  2px -2px 2px #2a63c5, 
+  -2px -2px 2px #2a63c5; 
 
   background-color: white;
 }
