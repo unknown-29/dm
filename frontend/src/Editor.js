@@ -7,6 +7,8 @@ import 'reactjs-popup/dist/index.css';
 import html2pdf from 'html2pdf.js';
 import { exportHtmlToDocx } from 'editor-to-word';
 import { saveAs } from 'file-saver';
+import ImageUploader from 'quill-image-uploader';
+
 function Editor() {
 	const navigate = useNavigate();
 	const [docname, setdocname] = useState('');
@@ -37,11 +39,64 @@ function Editor() {
 				[{ 'direction': 'rtl' }],
 				['link', 'image'],
 			];
-
+			Quill.register('modules/imageUploader', ImageUploader);
 			const quill = new Quill(editor, {
 				theme: 'snow',
 				modules: {
 					toolbar: toolbarOptions,
+					imageUploader: {
+						/* upload: (file) => {
+        return new Promise((resolve, reject) => {
+          const formData = new FormData();
+          formData.append("image", file);
+
+          fetch(
+            "https://api.imgbb.com/1/upload?key=334ecea9ec1213784db5cb9a14dac265",
+            {
+              method: "POST",
+              body: formData
+            }
+          )
+            .then((response) => response.json())
+            .then((result) => {
+              console.log(result);
+              resolve(result.data.url);
+            })
+            .catch((error) => {
+              reject("Upload failed");
+              console.error("Error:", error);
+            });
+        });
+      } */
+						upload: (file) => {
+							return new Promise((resolve, reject) => {
+								// const unsignedUploadPreset = 'doc_codepen_example';
+								const formData = new FormData();
+								formData.append(
+									'upload_preset',
+									process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
+								);
+								formData.append('tags', 'browser_upload'); // Optional - add tags for image admin in Cloudinary
+								formData.append('file', file);
+
+								fetch(
+									`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/upload`,
+									{
+										method: 'POST',
+										body: formData,
+									}
+								)
+									.then((response) => response.json())
+									.then((result) => {
+										resolve(result.secure_url);
+									})
+									.catch((error) => {
+										reject('Upload failed');
+										console.error('Error:', error);
+									});
+							});
+						},
+					},
 				},
 			});
 			const header = document.querySelector('.ql-toolbar.ql-snow');
