@@ -78,7 +78,7 @@ function Editor() {
 								);
 								formData.append('tags', 'browser_upload'); // Optional - add tags for image admin in Cloudinary
 								formData.append('file', file);
-
+								// visit https://cloudinary.com/pricing/compare-plans for details regarding free tier
 								fetch(
 									`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/upload`,
 									{
